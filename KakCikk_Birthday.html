@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Happy Birthday Bt21Chimos 🥳</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* BACKGROUND DIUBAH KE WARNA SOLID (Failsafe) */
+            background-color: #fce4ec; /* Pink/Ungu Muda Soft yang stabil */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #4b4266; /* Warna teks yang kontras dengan BG solid */
+            text-shadow: none; 
+        }
+
+        /* Tombol dan Animasi */
+        .effect-btn {
+            z-index: 10;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #f9c7e2, #a5b3f7); 
+            border: 3px solid #6b5c90;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 1.5em;
+            color: #4b4266;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease-in-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+        }
+
+        .effect-btn:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 10px 20px rgba(75, 66, 102, 0.5);
+        }
+
+        @keyframes lari {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-45%, -55%) rotate(5deg); }
+            50% { transform: translate(-50%, -50%) rotate(-5deg); }
+            75% { transform: translate(-55%, -45%) rotate(2deg); }
+            100% { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
+        .lari {
+            animation: lari 2s infinite alternate;
+        }
+
+        h1 {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4b4266; 
+            text-shadow: none;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+
+<audio id="sound" src="https://www.myinstants.com/media/sounds/kirby.mp3" preload="auto"></audio>
+<audio id="bday-music" src="https://www.myinstants.com/media/sounds/happy-birthday-music.mp3" loop preload="auto"></audio>
+
+<h1>Happy Birthday Bt21Chimos! 🥳</h1>
+
+<div class="effect-btn lari" onclick="mulai()">🎉 Klik di Sini Untuk Kado! 🎂</div>
+
+<script>
+    const soundEffect = document.getElementById("sound");
+    const bdayMusic = document.getElementById("bday-music");
+
+    // FUNGSI UNTUK MENGATASI BUG PLAY() DI IOS/SAFARI
+    function playAudio(audioElement) {
+        audioElement.currentTime = 0;
+        audioElement.play().catch(e => console.log("Audio play blocked:", e));
+    }
+    
+    function throwConfetti() {
+        confetti({
+            particleCount: 150,
+            spread: 90,
+            origin: { y: 0.6 }
+        });
+    }
+
+    async function mulai() {
+        // Hapus animasi lari dan ganti teks
+        document.querySelector('.effect-btn').classList.remove('lari');
+        document.querySelector('.effect-btn').textContent = "Pesan Dibuka! 🎁";
+        
+        // Panggil musik utama 
+        playAudio(bdayMusic);
+        
+        const messages = [
+            "Haloo Kak Cikkk ✨", "ciee ada yang ulang tahun nihh 🎂", "wkwkwkwk 🤣", 
+            "selamat ulang tahun yaaa kak cikk :D 🎉", "semoga panjang umur 🙏", 
+            "sehat selalu 💪", "semakin bertambah usianya kak cikk semoga mu semakin sukses dan bahagia selalu yaa ✨",
+            "semoga semua keinginan Kak Cikk juga bisa tercapai 🎯", 
+            "harus selalu jaga kesehatan ya Kak Cikk 🫶",
+            "pulangnya jangan sering telat telat juga biar kita bisa mabar terus wkwkwk 🎮🤣",
+            "jangan dibiasain tidur telat juga , ga sehat untuk kesehatan mu, oke Kak Cikk? 😴",
+            "hehehe 😆",
+            "semoga dihari ini diumur Kak Cikk yang baru bisa menjadi awal yang baik untuk kedepannya yaa 🌟",
+            "sekali lagi happy birthday Kak Cikk 🎈🎂"
+        ];
+        
+        // Eksekusi Perulangan Alert
+        for (const msg of messages) {
+            throwConfetti();
+            playAudio(soundEffect); 
+            alert(msg);
+            await new Promise(r => setTimeout(r, 100)); 
+        }
+
+        // Efek Confetti besar di akhir
+        confetti({
+            particleCount: 300,
+            spread: 180,
+            startVelocity: 60,
+            origin: { x: 0.5, y: 0.8 }
+        });
+    }
+    
+    // Confetti saat dimuat (untuk menunjukkan halaman sudah aktif)
+    setTimeout(throwConfetti, 1000); 
+
+</script>
+
+</body>
+</html>
